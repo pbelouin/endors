@@ -1,7 +1,38 @@
-=image_tag @user.image unless @user.image.nil?
-%p=@user.name
-
-- @user.user_skills.each do |user_skill|
-  = user_skill.name
-
-= link_to 'Edit', edit_user_path(@user)
+.row
+  .col-md-12
+    %hr
+    .media
+      %span.media-left
+        =image_tag @user.image, class: 'profile-img img-rounded' unless @user.image.nil?
+      .media-body
+        %h3.media-heading 
+          =@user.name
+        %h4= fa_icon "github", text: "pbelouin"
+        %h4
+          = @user.balance
+          skillcredz
+.row
+  .col-md-12
+    %hr
+    %h3 
+      Skills
+      %br
+      %h3.skill-container
+        - @user.user_skills.each do |user_skill|        
+          %span.label.label-primary.label-skill
+            = user_skill.name
+            = user_skill.balance
+    %hr
+    %h3 
+      Backers
+    %p
+      You're not backed by anybody :(
+    %br
+    %span  
+      = link_to 'get backers', User, class: 'button btn btn-info btn-sm'
+    %hr
+    %h3 
+      Backing
+    %p You're not backing anybody :(
+    %span
+      = link_to 'back people', User, class: 'button btn btn-info btn-sm'

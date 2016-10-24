@@ -18,6 +18,9 @@ gem 'omniauth-linkedin-oauth2'
 gem 'linkedin-oauth2', '~> 1.0'
 gem 'omniauth-github'
 gem 'octokit', '~> 4.0'
+gem 'font-awesome-rails'
+gem 'turbolinks'
+gem 'toastr-rails'
 
 group :development, :test do
   gem 'byebug', platform: :mri

@@ -7,6 +7,8 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string  :image
       t.string  :linkedin_token
       t.string  :github_token
+      t.string  :github_nickname
+      t.string  :github_url
       t.integer :balance, unsigned: true, default: 0
       t.timestamps
     end

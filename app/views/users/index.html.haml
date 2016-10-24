@@ -1,13 +1,42 @@
-%h1 Listing users
-
-%table
-  %thead
-    %tr
-      %th
-      %th
-      %th
-
-  %tbody
+.row
+  .col-md-12
+    #custom-search-input
+      .input-group.col-md-12
+        %input.form-control.input-lg{:placeholder => "Search", :type => "text"}/
+        %span.input-group-btn
+          %button.btn.btn-info.btn-lg{:type => "button"}
+            %i.glyphicon.glyphicon-search
+.row
+  .col-md-12
     - @users.each do |user|
-      %tr
-        %td= link_to 'Show', user
+      %hr
+      .media
+        %span.media-left
+          =image_tag (user.image.present? ? user.image : 'default_user'), class: 'list-img img-rounded'
+        .media-body
+          .col-xs-6
+            %h4.media-heading 
+              = link_to user.name, user
+            %h5
+              = link_to user.github_url, target: '_blank' do
+                %i.fa.fa-github
+                = user.github_nickname
+            %h5
+              = user.balance
+              skillcredz
+          .col-xs-6
+            .row
+              .col-xs-12.button-contain
+                - case current_user.requested_connection_status_for user
+                - when :none
+                  = link_to [:request_connection, user], class: 'btn btn-primary btn-sm pull-right' do
+                    %i.fa.fa-plus
+                    connect
+                - when :pending, :rejected
+                  = link_to [:request_connection, user], class: 'btn btn-info btn-sm pull-right disabled' do
+                    %i.fa.fa-question-circle
+                    connect requested
+                - when :accepted
+                  = link_to [:request_connection, user], class: 'btn btn-positive btn-sm disabled pull-right' do
+                    %i.fa.fa-check
+                    connected

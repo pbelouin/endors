@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161024105616) do
+ActiveRecord::Schema.define(version: 20161024163733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "connection_requests", force: :cascade do |t|
+    t.integer  "status",      default: 0
+    t.integer  "sender_id"
+    t.integer  "receiver_id"
+    t.boolean  "accepted",    default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["receiver_id"], name: "index_connection_requests_on_receiver_id", using: :btree
+    t.index ["sender_id"], name: "index_connection_requests_on_sender_id", using: :btree
+  end
 
   create_table "skills", force: :cascade do |t|
     t.string   "name"
@@ -38,6 +49,8 @@ ActiveRecord::Schema.define(version: 20161024105616) do
     t.string   "image"
     t.string   "linkedin_token"
     t.string   "github_token"
+    t.string   "github_nickname"
+    t.string   "github_url"
     t.integer  "balance",                default: 0
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false

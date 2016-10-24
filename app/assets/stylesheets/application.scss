@@ -1,3 +1,41 @@
+$font-family-sans-serif: 'Museo Sans',Arial,Helvetica,sans-serif;
+$navbar-default-bg:                #fff !default;
+$navbar-default-border: #fff!default;
+
+$brand-primary: darken(#ea1e63, 6.5%) !default; // #337ab7
+
+$brand-info: darken(#00e676, 6.5%) !default; // #337ab7
+
+.navbar-brand {
+	color: $brand-primary!important;
+}
+
+.skill-container{
+  margin-top: 0px;
+  line-height: 2em; 
+  .label-skill {
+	margin: 10px 10px 10px 0px;
+	padding-top: 5px;
+	font: 16px/26px Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New;
+  }
+}
+
+.button-contain {
+	margin-bottom: 5px;
+}
+
+.profile-img {
+  height: 150px;
+  width:  150px;
+}
+
+.list-img {
+	height: 80px;
+	width: 80px;
+}
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "devise_bootstrap_views";
+@import "font-awesome";
+@import 'toastr.css';

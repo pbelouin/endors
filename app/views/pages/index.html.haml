@@ -1,3 +1,14 @@
-%h1 endors
-%h3= t('description')
-= link_to t('Github'), user_github_omniauth_authorize_path
+.row.text-center
+  .col-md-12
+    %h1 skillcred.io
+    %h3= t('description')    
+    %h4 Get credz from your github or stackoverflow account
+    %h4 Spend and earn credz by endorsing your peers
+    %h4 ?????
+    %h4 Profit
+.row.text-center
+  .col-md-12
+    
+    = link_to user_github_omniauth_authorize_path, class: 'btn btn-lg btn-primary' do
+      %i.fa.fa-github
+      Acquire Skillcredz

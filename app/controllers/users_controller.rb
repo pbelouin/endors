@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :request_connection]
 
   # GET /users
   def index
-    @users = User.all
+    @users = User.all.skip(current_user)
   end
 
   # GET /users/1
@@ -18,6 +18,12 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+  end
+
+  def request_connection
+    ConnectionRequest.find_or_create_by(sender_id: current_user.id, receiver_id: @user.id)
+    flash[:notice] = "Your request has been sent. #{@user.name} will accept you if he wishes to do so."
+    redirect_to User
   end
 
   # POST /users
