@@ -1,0 +1,4 @@
+=image_tag @user.image unless @user.image.nil?
+%p=@user.name
+
+= link_to 'Edit', edit_user_path(@user)
