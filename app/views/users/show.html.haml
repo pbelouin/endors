@@ -1,4 +1,7 @@
 =image_tag @user.image unless @user.image.nil?
 %p=@user.name
 
+- @user.user_skills.each do |user_skill|
+  = user_skill.name
+
 = link_to 'Edit', edit_user_path(@user)
