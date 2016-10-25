@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161024163733) do
+ActiveRecord::Schema.define(version: 20161025161109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "authentication_providers", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_name_on_authentication_providers", using: :btree
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "connection_requests", force: :cascade do |t|
     t.integer  "status",      default: 0
@@ -26,10 +38,44 @@ ActiveRecord::Schema.define(version: 20161024163733) do
     t.index ["sender_id"], name: "index_connection_requests_on_sender_id", using: :btree
   end
 
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+  end
+
+  create_table "skill_categories", force: :cascade do |t|
+    t.integer  "skill_id"
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["category_id"], name: "index_skill_categories_on_category_id", using: :btree
+    t.index ["skill_id"], name: "index_skill_categories_on_skill_id", using: :btree
+  end
+
   create_table "skills", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "user_authentications", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "authentication_provider_id"
+    t.string   "uid"
+    t.string   "token"
+    t.datetime "token_expires_at"
+    t.text     "params"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["authentication_provider_id"], name: "index_user_authentications_on_authentication_provider_id", using: :btree
+    t.index ["user_id"], name: "index_user_authentications_on_user_id", using: :btree
   end
 
   create_table "user_skills", force: :cascade do |t|
@@ -44,6 +90,7 @@ ActiveRecord::Schema.define(version: 20161024163733) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
+    t.string   "slug"
     t.string   "provider"
     t.string   "uid"
     t.string   "image"
@@ -66,6 +113,7 @@ ActiveRecord::Schema.define(version: 20161024163733) do
     t.inet     "last_sign_in_ip"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["slug"], name: "index_users_on_slug", unique: true, using: :btree
   end
 
 end

@@ -21,6 +21,9 @@ gem 'octokit', '~> 4.0'
 gem 'font-awesome-rails'
 gem 'turbolinks'
 gem 'toastr-rails'
+gem 'ransack', github: 'activerecord-hackery/ransack'
+gem 'will_paginate', github: 'jonatack/will_paginate'
+gem 'friendly_id'
 
 group :development, :test do
   gem 'byebug', platform: :mri
@@ -38,3 +41,7 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'omniauth'
+gem 'omniauth-linkedin'
+gem 'omniauth-stackexchange'

@@ -2,13 +2,17 @@
   .col-md-12
     %h1 skillcred.io
     %h3= t('description')    
-    %h4 Get credz from your github or stackoverflow account
-    %h4 Spend and earn credz by endorsing your peers
-    %h4 ?????
-    %h4 Profit
+    %h4 Get creds from your github or stackoverflow account
+    %h4 Spend and earn creds by backing your peers
+    %h4 ????
+    %h4 PROFIT
 .row.text-center
   .col-md-12
     
     = link_to user_github_omniauth_authorize_path, class: 'btn btn-lg btn-primary' do
       %i.fa.fa-github
-      Acquire Skillcredz
+      Acquire Creds
+
+    = link_to user_stackexchange_omniauth_authorize_path, class: 'btn btn-lg btn-primary' do
+      %i.fa.fa-stack-overflow
+      Acquire Creds
