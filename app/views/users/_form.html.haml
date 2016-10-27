@@ -1,11 +1,14 @@
-= form_for @user do |f|
+= simple_form_for @user do |f|
   - if @user.errors.any?
     #error_explanation
       %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
       %ul
         - @user.errors.full_messages.each do |msg|
           %li= msg
-    = f.input :name
-
+  = f.input :name
+  #skills
+    = f.simple_fields_for :user_skills do |user_skill|
+      = render 'user_skill_fields', f: user_skill
+    = link_to_add_association 'add a skill', f, :user_skills
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', class: 'btn btn-primary'

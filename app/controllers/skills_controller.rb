@@ -3,7 +3,7 @@ class SkillsController < ApplicationController
 
   # GET /skills
   def index
-    @skills = Language.all
+    @skills = Skill.all
   end
 
   # GET /skills/1
@@ -12,7 +12,7 @@ class SkillsController < ApplicationController
 
   # GET /skills/new
   def new
-    @skill = Language.new
+    @skill = Skill.new
   end
 
   # GET /skills/1/edit
@@ -21,10 +21,10 @@ class SkillsController < ApplicationController
 
   # POST /skills
   def create
-    @skill = Language.new(skill_params)
+    @skill = Skill.new(skill_params)
 
     if @skill.save
-      redirect_to @skill, notice: 'Language was successfully created.'
+      redirect_to @skill, notice: 'Skill was successfully created.'
     else
       render :new
     end
@@ -33,7 +33,7 @@ class SkillsController < ApplicationController
   # PATCH/PUT /skills/1
   def update
     if @skill.update(skill_params)
-      redirect_to @skill, notice: 'Language was successfully updated.'
+      redirect_to @skill, notice: 'Skill was successfully updated.'
     else
       render :edit
     end
@@ -42,13 +42,13 @@ class SkillsController < ApplicationController
   # DELETE /skills/1
   def destroy
     @skill.destroy
-    redirect_to skills_url, notice: 'Language was successfully destroyed.'
+    redirect_to skills_url, notice: 'Skill was successfully destroyed.'
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_skill
-      @skill = Language.find(params[:id])
+      @skill = Skill.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

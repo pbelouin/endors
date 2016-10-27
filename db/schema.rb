@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20161025161109) do
   end
 
   create_table "categories", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -91,6 +92,7 @@ ActiveRecord::Schema.define(version: 20161025161109) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "slug"
+    t.string   "tagline"
     t.string   "provider"
     t.string   "uid"
     t.string   "image"
@@ -98,6 +100,12 @@ ActiveRecord::Schema.define(version: 20161025161109) do
     t.string   "github_token"
     t.string   "github_nickname"
     t.string   "github_url"
+    t.integer  "github_balance",         default: 0
+    t.string   "stackexchange_token"
+    t.string   "stackexchange_nickname"
+    t.string   "stackexchange_url"
+    t.integer  "stackexchange_id"
+    t.integer  "stackexchange_balance",  default: 0
     t.integer  "balance",                default: 0
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false

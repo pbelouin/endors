@@ -24,11 +24,17 @@ gem 'toastr-rails'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'will_paginate', github: 'jonatack/will_paginate'
 gem 'friendly_id'
+gem 'ruby-stackoverflow'
+gem 'font-kit-rails', '~> 1.2.0'
+gem 'cocoon'
+gem 'jquery-ui-rails'
+gem 'active_link_to'
 
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec'
   gem 'factory_girl'
+  gem 'letter_opener'
 end
 
 group :development do

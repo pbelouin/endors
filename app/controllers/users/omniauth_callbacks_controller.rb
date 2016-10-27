@@ -39,6 +39,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         user.set_github_data!
       when :linkedin
       when :stackexchange
+        user.set_stackexchange_data!
       end
       sign_in_and_redirect(:user, user)
     end

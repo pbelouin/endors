@@ -1,6 +1,30 @@
-%p#notice= notice
-
-
-= link_to 'Edit', edit_skill_path(@skill)
-\|
-= link_to 'Back', skills_path
+.row
+  .col-md-12
+    %h3.text-primary
+      = @skill.name.capitalize
+    %h3
+      .small
+        = @skill.categories.map(&:name).join(',')
+.row
+  .col-md-12
+    %h4 People with this skill
+    - @skill.users.each do |user|
+      %hr
+      .media
+        %span.media-left
+          =image_tag (user.image.present? ? user.image : 'default_user'), class: 'list-img img-rounded'
+        .media-body
+          .col-xs-12
+            %h4.media-heading 
+              = link_to user.name, user
+            %h5
+              - if user.has_github?
+                = link_to user.github_url, target: '_blank' do
+                  %i.fa.fa-github
+                  = user.github_nickname
+            %h4
+              - user.user_skills.includes(:skill).each do |user_skill|        
+                .btn-group.small-skill{"aria-label" => "...", :role => "group"}
+                  - disabled = (current_user.has_superior_balance_than?(user_skill)? '': 'disabled')
+                  = link_to user_skill.name.capitalize, user_skill.skill, class: 'button btn btn-xs btn-primary'
+                  = link_to user_skill.balance, [user_skill, :add_credit],method: 'PUT', class: "button btn btn-xs btn-info #{disabled}"

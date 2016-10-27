@@ -1,0 +1,4 @@
+.nested-fields.user-skill-fields
+  .skill_from_list
+    = f.association :skill, :collection => Skill.all, :prompt => 'Choose an existing skill'
+  = link_to_remove_association "remove skill", f

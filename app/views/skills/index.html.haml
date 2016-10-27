@@ -1,19 +1,12 @@
-%h1 Listing skills
-
-%table
-  %thead
-    %tr
-      %th
-      %th
-      %th
-
-  %tbody
-    - @skills.each do |skill|
-      %tr
-        %td= link_to 'Show', skill
-        %td= link_to 'Edit', edit_skill_path(skill)
-        %td= link_to 'Destroy', skill, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Skill', new_skill_path
+.row
+  .col-md-12
+    #custom-search-input
+      .input-group.col-md-12
+        %input.form-control.input-lg{:placeholder => "Search", :type => "text"}/
+        %span.input-group-btn
+          %button.btn.btn-info.btn-lg{:type => "button"}
+            %i.glyphicon.glyphicon-search
+- @skills.each do |skill|       
+  %h3
+    = link_to skill.name.capitalize, skill
+  %hr

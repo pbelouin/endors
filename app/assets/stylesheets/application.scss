@@ -1,23 +1,31 @@
-$font-family-sans-serif: 'Museo Sans',Arial,Helvetica,sans-serif;
+@import 'font-kit-rails/open-sans.css';
+
+$font-family-sans-serif: 'Open Sans';
 $navbar-default-bg:                #fff !default;
-$navbar-default-border: #fff!default;
+$navbar-default-border: #ccc!default;
 
 $brand-primary: darken(#ea1e63, 6.5%) !default; // #337ab7
 
 $brand-info: darken(#00e676, 6.5%) !default; // #337ab7
 
+$link-color: $brand-info !default;
+
 .navbar-brand {
 	color: $brand-primary!important;
 }
 
-.skill-container{
-  margin-top: 0px;
-  line-height: 2em; 
-  .label-skill {
-	margin: 10px 10px 10px 0px;
-	padding-top: 8px;
-	font: 16px/26px Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New;
+.nav {
+  .active {
+    color: $brand-primary!important;
   }
+}
+
+.skill {
+  margin: 15px 5px 0px 0px;
+}
+
+.small-skill {
+  margin: 10px 5px 0px 0px;
 }
 
 .button-contain {
@@ -39,3 +47,12 @@ $brand-info: darken(#00e676, 6.5%) !default; // #337ab7
 @import "devise_bootstrap_views";
 @import "font-awesome";
 @import 'toastr.css';
+@import 'jquery-ui.css';
+ 
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+
+a:hover, a:active, a:link {
+    text-decoration: none;
+}

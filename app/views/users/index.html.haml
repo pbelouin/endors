@@ -14,7 +14,7 @@
         %span.media-left
           =image_tag (user.image.present? ? user.image : 'default_user'), class: 'list-img img-rounded'
         .media-body
-          .col-xs-6
+          .col-xs-12
             %h4.media-heading 
               = link_to user.name, user
             %h5
@@ -22,22 +22,28 @@
                 = link_to user.github_url, target: '_blank' do
                   %i.fa.fa-github
                   = user.github_nickname
-            %h5
+            %h4.text-primary
               = user.balance
-              skillcredz
-          .col-xs-6
-            .row
-              .col-xs-12.button-contain
-                - case current_user.requested_connection_status_for user
-                - when :none
-                  = link_to [:request_connection, user], class: 'btn btn-primary btn-sm pull-right' do
-                    %i.fa.fa-plus
-                    connect
-                - when :pending, :rejected
-                  = link_to [:request_connection, user], class: 'btn btn-info btn-sm pull-right disabled' do
-                    %i.fa.fa-question-circle
-                    connect requested
-                - when :accepted
-                  = link_to [:request_connection, user], class: 'btn btn-positive btn-sm disabled pull-right' do
-                    %i.fa.fa-check
-                    connected
+              ℂ
+            %h4
+              - user.user_skills.includes(:skill).each do |user_skill|        
+                .btn-group.small-skill{"aria-label" => "...", :role => "group"}
+                  = link_to user_skill.name.capitalize, user_skill.skill, class: 'button btn btn-xs btn-primary'
+                  %button.btn.btn-info.btn-xs.disabled{:type => "button"}
+                    = user_skill.balance
+          -#.col-xs-2
+          -#  .row
+          -#    .col-xs-12.button-contain
+          -#      - case current_user.requested_connection_status_for user
+          -#      - when :none
+          -#        = link_to [:request_connection, user], class: 'btn btn-primary btn-sm pull-right' do
+          -#          %i.fa.fa-plus
+          -#          connect
+          -#      - when :pending, :rejected
+          -#        = link_to [:request_connection, user], class: 'btn btn-info btn-sm pull-right disabled' do
+          -#          %i.fa.fa-question-circle
+          -#          connect requested
+          -#      - when :accepted
+          -#        = link_to [:request_connection, user], class: 'btn btn-positive btn-sm disabled pull-right' do
+          -#          %i.fa.fa-check
+          -#          connected

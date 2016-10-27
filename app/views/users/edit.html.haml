@@ -1,5 +1,37 @@
-= render 'form'
+= simple_form_for @user do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+  .row
+    .col-md-12
+      .media
+        %span.media-left
+          =image_tag (@user.image.present? ? @user.image : 'default_user'), class: 'profile-img'
+        .media-body
+          %h3.media-heading 
+            = f.input :name,    label: false, placeholder: 'name'
+            = f.input :tagline, label: false, placeholder: 'tagline'
+          = f.button :submit, 'Save Changes', class: 'btn btn-info pull-right'
+.row
+  .col-md-12
+    %h3.skill-container
+      - @user.user_skills.each do |user_skill|        
+        .btn-group.skill{"aria-label" => "...", :role => "group"}
+          = link_to user_skill.name.capitalize, user_skill.skill, class: 'button btn btn-primary'
+          = link_to [:remove_skill, @user], method: :delete, confirm: 'Delete?', class: 'button btn btn-info link-delete','data-params' => "user_skill_id=#{user_skill.id}", 'data-confirm' => 'Are you sure? You will lose the creds you have against this skill!', 'data-severity' => 'danger', remote: true do 
+            = fa_icon 'times'
+    .row
+      = simple_form_for [:add_skill, @user], method: 'POST' do |f|
+        .col-lg-12
+          .input-group#skills-input-group
+            %input.form-control#skills{:placeholder => "Add a skill", :type => "text", :name => "skill_name"}
+            %span.input-group-btn
+              = f.button :submit, '+', class: 'btn btn-info'
+        
+    :javascript
+      availableSkills = #{@user.available_skills.to_json.html_safe};
+      $('#skills').autocomplete({source: availableSkills});  
 
-= link_to 'Show', @user
-\|
-= link_to 'Back', users_path

@@ -16,3 +16,4 @@
 //= require_tree .
 //= require toastr
 //= require bootstrap-sprockets
+//= require jquery-ui

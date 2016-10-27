@@ -1,45 +1,74 @@
 .row
   .col-md-12
-    %hr
     .media
       %span.media-left
-        =image_tag @user.image, class: 'profile-img img-rounded' unless @user.image.nil?
+        =image_tag (@user.image.present? ? @user.image : 'default_user'), class: 'profile-img' 
       .media-body
         %h3.media-heading 
           =@user.name
-        %h4
+          - if @user.id == current_user.id
+            (You)
+          %br
+          %span.small=@user.tagline
+        %h4.text-primary
+          = @user.balance
+          ℂ
+        %h5
           - if @user.has_github?
             = link_to @user.github_url, target: '_blank' do
               %i.fa.fa-github
-              = @user.github_nickname
-        %h4
-          = @user.balance
-          creds received
-        %h4
-          = @user.balance
-          creds given
+              = "#{@user.github_nickname}"
+          - else
+            - if @user.id == current_user.id
+              = link_to user_github_omniauth_authorize_path, class: 'button btn btn-xs btn-default' do
+                %i.fa.fa-github
+                link to github
+        %h5
+          - if @user.has_stackexchange?
+            = link_to @user.stackexchange_url, target: '_blank' do
+              %i.fa.fa-stack-overflow
+              = "#{@user.stackexchange_nickname}"
+          - else
+            - if @user.id == current_user.id
+              = link_to user_stackexchange_omniauth_authorize_path, class: 'button btn btn-xs btn-default' do
+                %i.fa.fa-stack-overflow
+                link to stack overflow
+        - if @user.id == current_user.id
+          %h4
+            = link_to [:edit, @user], class: 'button btn btn-xs btn-default' do
+              = fa_icon 'pencil-square-o'
+              edit
+
 .row
   .col-md-12
-    %hr
-    %h3 
-      Skills
-      %br
-      %h3.skill-container
-        - @user.user_skills.each do |user_skill|        
-          %span.label.label-primary.label-skill
-            = user_skill.name.capitalize
-            = user_skill.balance
-    %hr
-    %h3 
-      Backers
-    %p
-      You're not backed by anybody :(
+    %h3.skill-container
+      - @user.user_skills.includes(:skill).each do |user_skill|        
+        .btn-group.skill{"aria-label" => "...", :role => "group"}
+          - disabled = (current_user.has_superior_balance_than?(user_skill)? '': 'disabled')
+          = link_to user_skill.name.capitalize, user_skill.skill, class: "button btn btn-primary"
+          = link_to user_skill.balance, [user_skill, :add_credit],method: 'PUT', class: "button btn btn-info #{disabled}"
+            
+.row
+  .col-md-12
     %br
-    %span  
-      = link_to 'get backers', User, class: 'button btn btn-info btn-sm'
-    %hr
-    %h3 
-      Backing
-    %p You're not backing anybody :(
-    %span
-      = link_to 'back people', User, class: 'button btn btn-info btn-sm'
+    %h4
+      %ul.nav.nav-tabs
+        %li.active{:role => "presentation"}
+          %a{:href => "#backers",'data-toggle' => "tab"} Backers
+        %li{:role => "presentation"}
+          %a{:href => "#backing",'data-toggle' => "tab"} Backing
+    .tab-content
+      #backers.tab-pane.active{:role => "tabpanel"}
+        %br
+        %p
+          You're not backed by anybody.  
+          = link_to User, class: 'button btn btn-default btn-sm' do
+            %i.fa.fa-user-plus
+            get backer
+      #backing.tab-pane{:role => "tabpanel"}
+        %br
+        %p
+          You're not backing anybody.
+          = link_to User, class: 'button btn btn-default btn-sm' do
+            %i.fa.fa-user-plus
+            back people
